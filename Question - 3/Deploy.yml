@@ -1,0 +1,39 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  creationTimestamp: null
+  labels:
+  name: MyApp-api
+  namespace: ingress-nginx
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: MyApp-api
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: MyApp-api
+    spec:
+      containers:
+      - image: maersk.azurecr.io/MyApp-api:#{BuildNumber}
+        name: MyApp-api
+        resources: {}
+      imagePullSecrets:
+      - name: MyAppregistrykey
+status: {}
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: MyApp-api
+  namespace: ingress-nginx
+spec:
+  type: ClusterIP
+  ports:
+  - port: 80
+  selector:
+    app: MyApp-api

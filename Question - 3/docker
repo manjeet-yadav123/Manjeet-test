@@ -1,0 +1,5 @@
+FROM mcr.microsoft.com/dotnet/core/sdk:3.1 AS base
+EXPOSE 80
+WORKDIR /app
+COPY ./ /app  # Copy everything else and build
+ENTRYPOINT ["dotnet", "aspnetapp.dll"]
